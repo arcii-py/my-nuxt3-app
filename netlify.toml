@@ -1,3 +1,4 @@
 [build]
+  # base = "my-nuxt3-app/"  <-- This line should be removed or commented out if your Nuxt files are in the root
   publish = "dist"
   command = "npm run generate"
