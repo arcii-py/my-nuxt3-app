@@ -15,7 +15,6 @@
   "dependencies": {
     "@nuxtjs/netlify-files": "^1.2.0",
     "@nuxtjs/pwa": "^3.3.5",
-    "@vite-pwa/nuxt": "^0.1.0",
     "core-js": "^3.25.3",
     "faunadb": "^4.8.0",
     "nuxt": "^2.15.8",
