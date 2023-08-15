@@ -1,0 +1,4 @@
+[build]
+  base = "my-nuxt3-app/"
+  publish = "dist"
+  command = "npm run generate"
