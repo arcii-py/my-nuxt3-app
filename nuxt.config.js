@@ -1,3 +1,5 @@
+const isDev = process.env.NODE_ENV === 'development';
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -35,17 +37,18 @@ export default {
     '@nuxtjs/auth-next',
   ],
   http: {
-    proxy: true, // Enable proxy for local development
+    proxy: isDev, // Enable proxy only in development mode
   },
-
-  proxy: {
+  
+  proxy: isDev ? {
     '/.netlify/functions/': {
-      target: 'http://localhost:8888', // Default port for Netlify Dev
+      target: 'http://localhost:8888',
       pathRewrite: {
         '^/.netlify/functions/': ''
       }
     }
-  },
+  } : {},
+  
 
   auth: {
     strategies: {
