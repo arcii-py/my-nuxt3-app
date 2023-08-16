@@ -4,9 +4,6 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    script: [
-      { src: 'https://apis.google.com/js/platform.js', async: true, defer: true }
-    ],
     title: 'my-nuxt3-app',
     meta: [
       { charset: 'utf-8' },
@@ -89,7 +86,7 @@ export default {
 
   env: {
     VAPID_PUBLIC_KEY: process.env.VAPID_PUBLIC_KEY,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID
+    
   },
 
 }
