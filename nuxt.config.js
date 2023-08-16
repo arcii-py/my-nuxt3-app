@@ -88,7 +88,8 @@ export default {
   build: {},
 
   env: {
-    VAPID_PUBLIC_KEY: process.env.VAPID_PUBLIC_KEY
+    VAPID_PUBLIC_KEY: process.env.VAPID_PUBLIC_KEY,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID
   },
 
 }
