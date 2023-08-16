@@ -1,4 +1,5 @@
 const faunadb = require('faunadb');
+const bcrypt = require('bcrypt');
 const q = faunadb.query;
 
 const client = new faunadb.Client({
@@ -28,13 +29,17 @@ exports.handler = async (event, context) => {
     // User not found is expected, so no action needed
   }
 
-  // Create new user
+  // Hash the password
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(data.password, saltRounds);
+
+  // Create new user with hashed password
   try {
     const newUser = await client.query(
       q.Create(q.Collection("users"), {
         data: {
           email: data.email,
-          password: data.password, // Note: You should hash the password before storing
+          password: hashedPassword, // Store the hashed password
           // ... any other data fields
         },
       })
