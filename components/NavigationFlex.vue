@@ -3,7 +3,7 @@
         <nuxt-link to="/" class="logo">MOTIV-e Me</nuxt-link>
         <nav>
             <nuxt-link to="/">Home</nuxt-link>
-            <nuxt-link to="/about">About</nuxt-link>
+            <nuxt-link to="/login">Login</nuxt-link>
         </nav>
     </header>
 </template>
