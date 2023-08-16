@@ -1,6 +1,7 @@
 const isDev = process.env.NODE_ENV === 'development';
 
 export default {
+  devtools: { enabled: true },
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
@@ -35,6 +36,7 @@ export default {
     '@nuxtjs/tailwindcss',
     '@nuxt/http', 
     '@nuxtjs/auth-next',
+    '@nuxtjs/supabase',
   ],
   http: {
     proxy: isDev, // Enable proxy only in development mode
