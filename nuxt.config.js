@@ -76,6 +76,7 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/onesignal',
     '@nuxtjs/pwa',
+    '@nuxtjs/supabase',
   ],
   oneSignal: {
     init: {
@@ -124,7 +125,8 @@ export default {
 
   env: {
     VAPID_PUBLIC_KEY: process.env.VAPID_PUBLIC_KEY,
-    
+    SUPABASE_URL: process.env.SUPABASE_URL,
+    SUPABASE_KEY: process.env.SUPABASE_KEY,
   },
 
 }
