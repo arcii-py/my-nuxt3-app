@@ -25,6 +25,7 @@ export default {
     { src: '~/plugins/onesignal.js', mode: 'client' },
     { src: '~/plugins/supabase.js' }
   ],
+  
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -36,7 +37,7 @@ export default {
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
     '@nuxt/http',
-    '@nuxtjs/auth-next',
+   // '@nuxtjs/auth-next',
     '@nuxtjs/supabase',
   ],
   http: {
@@ -57,8 +58,8 @@ export default {
     strategies: {
       supabase: {
         provider: 'supabase',
-        supabaseUrl: process.env.SUPABASE_URL,
-        supabaseKey: process.env.SUPABASE_KEY,
+        supabaseUrl: 'YOUR_SUPABASE_URL',
+        supabaseKey: 'YOUR_SUPABASE_ANON_KEY',  
         endpoints: {
           login: { url: '/auth/login', method: 'post' },
           logout: { url: '/auth/logout', method: 'post' },
