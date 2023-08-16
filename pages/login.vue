@@ -1,49 +1,35 @@
 <template>
     <div>
-        <h2>Login</h2>
-        <form @submit.prevent="login">
-            <input type="email" v-model="email" placeholder="Email" required />
-            <input type="password" v-model="password" placeholder="Password" required />
-            <button type="submit">Login</button>
-        </form>
-        <p>{{ message }}</p>
+      <h1>Login</h1>
+      <input v-model="email" placeholder="Email" />
+      <input v-model="password" type="password" placeholder="Password" />
+      <button @click="login">Login</button>
     </div>
-</template>
-
-<script>
-export default {
+  </template>
+  
+  <script>
+  export default {
     data() {
-        return {
-            email: '',
-            password: '',
-            message: ''
-        };
+      return {
+        email: '',
+        password: '',
+      }
     },
     methods: {
-        async login() {
-            try {
-                const response = await fetch("/api/login", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        email: this.email,
-                        password: this.password
-                    })
-                });
-
-                const data = await response.json();
-                this.message = data.message;
-
-                if (data.success) {
-                    // Redirect to dashboard or main page after successful login
-                    this.$router.push('/dashboard');
-                }
-            } catch (error) {
-                this.message = "An error occurred.";
-            }
+      async login() {
+        try {
+          await this.$auth.loginWith('local', {
+            data: {
+              email: this.email,
+              password: this.password,
+            },
+          })
+          this.$router.push('/')
+        } catch (error) {
+          console.error('An error occurred:', error)
         }
-    }
-}
-</script>
+      },
+    },
+  }
+  </script>
+  

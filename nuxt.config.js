@@ -31,7 +31,40 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxt/http', 
+    '@nuxtjs/auth-next',
   ],
+  http: {
+    proxy: true, // Enable proxy for local development
+  },
+
+  proxy: {
+    '/.netlify/functions/': {
+      target: 'http://localhost:8888', // Default port for Netlify Dev
+      pathRewrite: {
+        '^/.netlify/functions/': ''
+      }
+    }
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+        },
+        user: {
+          property: 'user',
+        },
+        endpoints: {
+          login: { url: '/.netlify/functions/login', method: 'post' },
+          logout: false,
+          user: { url: '/.netlify/functions/me', method: 'get' },
+        },
+      },
+    },
+  },
+
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

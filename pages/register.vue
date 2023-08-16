@@ -1,49 +1,33 @@
 <template>
     <div>
-        <h2>Register</h2>
-        <form @submit.prevent="register">
-            <input type="email" v-model="email" placeholder="Email" required />
-            <input type="password" v-model="password" placeholder="Password" required />
-            <button type="submit">Register</button>
-        </form>
-        <p>{{ message }}</p>
+      <h1>Register</h1>
+      <input v-model="email" placeholder="Email" />
+      <input v-model="password" type="password" placeholder="Password" />
+      <button @click="register">Register</button>
     </div>
-</template>
-
-<script>
-export default {
+  </template>
+  
+  <script>
+  export default {
     data() {
-        return {
-            email: '',
-            password: '',
-            message: ''
-        };
+      return {
+        email: '',
+        password: '',
+      }
     },
     methods: {
-        async register() {
-            try {
-                const response = await fetch("/api/register", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        email: this.email,
-                        password: this.password
-                    })
-                });
-
-                const data = await response.json();
-                this.message = data.message;
-
-                if (data.success) {
-                    // Redirect to login or dashboard after successful registration
-                    this.$router.push('/login');
-                }
-            } catch (error) {
-                this.message = "An error occurred.";
-            }
+      async register() {
+        try {
+          await this.$http.post('/register', {
+            email: this.email,
+            password: this.password,
+          })
+          this.$router.push('/login')
+        } catch (error) {
+          console.error('An error occurred:', error)
         }
-    }
-}
-</script>
+      },
+    },
+  }
+  </script>
+  
