@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const q = faunadb.query;
 
 const client = new faunadb.Client({
-  secret: process.env.FAUNA_SECRET
+  secret: process.env.FAUNA_SECRET3
 });
 
 exports.handler = async (event, context) => {
