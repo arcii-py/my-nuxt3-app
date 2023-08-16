@@ -1,6 +1,6 @@
 const faunadb = require('faunadb')
 
-const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET })
+const client = new faunadb.Client({ secret: process.env.FAUNA_SECRET })
 const q = faunadb.query
 
 

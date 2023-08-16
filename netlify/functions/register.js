@@ -2,7 +2,7 @@ const faunadb = require('faunadb');
 const q = faunadb.query;
 
 const client = new faunadb.Client({
-  secret: process.env.FAUNADB_SECRET
+  secret: process.env.FAUNA_SECRET
 });
 
 exports.handler = async (event, context) => {
