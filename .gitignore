@@ -90,3 +90,4 @@ dist
 *.swp
 
 files.txt
+.env

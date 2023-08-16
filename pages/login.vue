@@ -9,35 +9,25 @@
   </template>
   
   <script>
+  
+import { supabase } from '~/plugins/supabase';
   export default {
-    data() {
-      return {
-        email: '',
-        password: '',
-        loading: false,
-        error: null,
-      };
-    },
-    methods: {
-      async login() {
-        this.loading = true;
-        this.error = null;
-        try {
-          await this.$auth.loginWith('local', {
-            data: {
-              email: this.email,
-              password: this.password,
-            },
-          });
-          this.$router.push('/');
-        } catch (error) {
-          console.error('An error occurred:', error);
-          this.error = error.message || 'An error occurred during login.';
-        } finally {
-          this.loading = false;
-        }
-      },
-    },
-  };
+// In your component or page
+
+
+async login() {
+  const { user, error } = await supabase.auth.signIn({
+    email: this.email,
+    password: this.password,
+  });
+
+  if (error) {
+    console.error('Error logging in:', error.message);
+  } else {
+    console.log('Login successful:', user);
+    this.$router.push('/'); // Redirect to home or dashboard
+  }
+}
+
   </script>
   

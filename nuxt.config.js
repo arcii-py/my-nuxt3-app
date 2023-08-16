@@ -22,7 +22,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/onesignal.js', mode: 'client' }
+    { src: '~/plugins/onesignal.js', mode: 'client' },
+    { src: '~/plugins/supabase.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -34,14 +35,14 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxt/http', 
+    '@nuxt/http',
     '@nuxtjs/auth-next',
     '@nuxtjs/supabase',
   ],
   http: {
     proxy: isDev, // Enable proxy only in development mode
   },
-  
+
   proxy: isDev ? {
     '/.netlify/functions/': {
       target: 'http://localhost:8888',
@@ -50,25 +51,27 @@ export default {
       }
     }
   } : {},
-  
+
 
   auth: {
     strategies: {
-      local: {
-        token: {
-          property: 'token',
+      supabase: {
+        provider: 'supabase',
+        supabaseUrl: process.env.SUPABASE_URL,
+        supabaseKey: process.env.SUPABASE_KEY,
+        endpoints: {
+          login: { url: '/auth/login', method: 'post' },
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/auth/user', method: 'get' },
         },
         user: {
           property: 'user',
-        },
-        endpoints: {
-          login: { url: '/.netlify/functions/login', method: 'post' },
-          logout: false,
-          user: { url: '/.netlify/functions/me', method: 'get' },
+          autoFetch: true,
         },
       },
     },
   },
+  
 
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -126,7 +129,8 @@ export default {
   env: {
     VAPID_PUBLIC_KEY: process.env.VAPID_PUBLIC_KEY,
     SUPABASE_URL: process.env.SUPABASE_URL,
-    SUPABASE_KEY: process.env.SUPABASE_KEY,
+    SUPABASE_KEY: process.env.SUPABASE_KEY
   },
+  
 
 }
