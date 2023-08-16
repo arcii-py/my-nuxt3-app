@@ -1,13 +1,15 @@
 <template>
-    <div class="login-container">
-      <h2>Login</h2>
-      <!-- Google Sign-In Button -->
-      <div class="g-signin2" data-onsuccess="onSignIn" :data-clientid="GOOGLE_CLIENT_ID"></div>
-      <!-- Regular Login Form (Optional) -->
-      <form @submit.prevent="login">
+    <div class="register-container">
+      <h2>Register</h2>
+      
+      <!-- Google Registration Button -->
+      <div class="g-signin2" data-onsuccess="onGoogleRegister" :data-clientid="GOOGLE_CLIENT_ID"></div>
+      
+      <!-- Regular Registration Form -->
+      <form @submit.prevent="register">
         <input type="email" v-model="email" placeholder="Email" required />
         <input type="password" v-model="password" placeholder="Password" required />
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
     </div>
 </template>
@@ -22,7 +24,7 @@ export default {
     };
   },
   methods: {
-    async onSignIn(googleUser) {
+    async onGoogleRegister(googleUser) {
       const id_token = googleUser.getAuthResponse().id_token;
 
       try {
@@ -37,8 +39,8 @@ export default {
         const data = await response.json();
 
         if (data.success) {
-          // Handle successful login, e.g., redirecting to a dashboard or setting a user state
-          console.log("User data:", data.user);
+          // TODO: Store the user data in FaunaDB (or another database) after successful Google registration
+          console.log("Google registration successful:", data.user);
         } else {
           console.error("Error:", data.error);
         }
@@ -46,8 +48,8 @@ export default {
         console.error("An error occurred:", error);
       }
     },
-    login() {
-      // Handle regular login logic here
+    async register() {
+      // TODO: Implement the logic for regular registration using email and password
     }
   }
 };
