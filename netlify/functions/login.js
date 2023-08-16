@@ -1,52 +1,44 @@
-const faunadb = require('faunadb');
-const bcrypt = require('bcrypt');
-const q = faunadb.query;
+<template>
+  <div>
+    <h1>Login</h1>
+    <input v-model="email" placeholder="Email" />
+    <input v-model="password" type="password" placeholder="Password" />
+    <button :disabled="loading" @click="login">Login</button>
+    <p v-if="error">{{ error }}</p>
+  </div>
+</template>
 
-const client = new faunadb.Client({
-  secret: process.env.FAUNA_SECRET3
-});
+<script>
+import { supabase } from '~/plugins/supabase';
 
-exports.handler = async (event, context) => {
-  if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" };
-  }
-
-  const data = JSON.parse(event.body);
-
-  try {
-    // Retrieve the user from FaunaDB
-    const user = await client.query(
-      q.Get(q.Match(q.Index("users_by_email"), data.email))
-    );
-
-    // Compare the provided password with the hashed password in FaunaDB
-    const isPasswordValid = await bcrypt.compare(data.password, user.data.password);
-
-    if (!isPasswordValid) {
-      return {
-        statusCode: 401,
-        body: JSON.stringify({ message: "Invalid password" }),
-      };
-    }
-
-    // Here, you would typically generate and return a JWT or some other form of token for authentication
-    // For simplicity, we're just returning a success message
+export default {
+  data() {
     return {
-      statusCode: 200,
-      body: JSON.stringify({ message: "Login successful" }),
+      email: '',
+      password: '',
+      error: '',
+      loading: false
     };
+  },
+  methods: {
+    async login() {
+      this.loading = true; // Start loading
 
-  } catch (error) {
-    if (error.name === 'NotFound') {
-      return {
-        statusCode: 404,
-        body: JSON.stringify({ message: "User not found" }),
-      };
+      const { user, error } = await supabase.auth.signIn({
+        email: this.email,
+        password: this.password,
+      });
+
+      this.loading = false; // End loading
+
+      if (error) {
+        this.error = error.message;
+        console.error('Error logging in:', error.message);
+      } else {
+        console.log('Login successful:', user);
+        this.$router.push('/'); // Redirect to home or dashboard
+      }
     }
-
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ message: "Internal Server Error" }),
-    };
   }
 };
+</script>
